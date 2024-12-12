@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Alert, Text } from "react-native";
-import { router, useFocusEffect } from "expo-router";
+import { router } from "expo-router";
 import MapView, { LatLng, Callout, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
@@ -76,10 +76,6 @@ export default function Home() {
     fetchPlaces();
   }, [selectedCategory]);
 
-  useFocusEffect(() => {
-    fetchPlaces();
-  });
-
   return (
     <View style={{ flex: 1, backgroundColor: colors.gray[200] }}>
       <Categories
@@ -106,38 +102,41 @@ export default function Home() {
             image={require("@/assets/location.png")}
           />
 
-          {places.map((place) => (
-            <Marker
-              key={place.id}
-              identifier={place.id}
-              coordinate={{
-                latitude: place.latitude,
-                longitude: place.longitude,
-              }}
-              image={require("@/assets/pin.png")}
-            >
-              <Callout onPress={() => router.navigate({ pathname: '/market/[id]', params: { id: place.id } })}>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: colors.gray[600],
-                      fontFamily: fontFamily.medium,
-                    }}
-                  >
-                    {place.name}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      color: colors.gray[600],
-                      fontFamily: fontFamily.regular,
-                    }}
-                  >{place.address}</Text>
-                </View>
-              </Callout>
-            </Marker>
-          ))}
+          {places.map((place) => {
+            console.log(place.name);
+            return (
+              <Marker
+                key={place.id}
+                identifier={place.id}
+                coordinate={{
+                  latitude: place.latitude,
+                  longitude: place.longitude,
+                }}
+                image={require("@/assets/pin.png")}
+              >
+                <Callout onPress={() => router.navigate({ pathname: '/market/[id]', params: { id: place.id } })}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: colors.gray[600],
+                        fontFamily: fontFamily.medium,
+                      }}
+                    >
+                      {place.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        color: colors.gray[600],
+                        fontFamily: fontFamily.regular,
+                      }}
+                    >{place.address}</Text>
+                  </View>
+                </Callout>
+              </Marker>
+            )
+          })}
         </MapView>
       )}
 
