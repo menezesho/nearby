@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, Alert, Text } from "react-native";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import MapView, { LatLng, Callout, Marker } from "react-native-maps";
 import * as Location from "expo-location";
 
@@ -75,6 +75,10 @@ export default function Home() {
   useEffect(() => {
     fetchPlaces();
   }, [selectedCategory]);
+
+  useFocusEffect(() => {
+    fetchPlaces();
+  });
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.gray[200] }}>

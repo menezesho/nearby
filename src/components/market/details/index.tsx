@@ -21,7 +21,6 @@ type Props = {
 }
 
 export function Details({ data }: Props) {
-  console.log(data)
   return (
     <View style={s.container}>
       <Text style={s.name}>{data.name}</Text>
